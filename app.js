@@ -3,10 +3,14 @@ const dotenv = require("dotenv");
 const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schema/schema");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 dotenv.config({ path: "./config/.env" });
 
 const app = express();
+
+// allow cors
+app.use(cors());
 
 // connect to mlab database
 mongoose.connect(`mongodb://${process.env.mLabUser}:${process.env.mLabPassword}@ds141766.mlab.com:41766/gql-ninja`, {
