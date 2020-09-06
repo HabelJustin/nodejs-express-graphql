@@ -34,4 +34,19 @@ const ADD_BOOK = gql`
 	}
 `;
 
-export { GET_BOOKS, GET_AUTHORS, ADD_BOOK };
+// @GetBook
+const GET_BOOK = gql`
+	query GetBook($id: ID!) {
+		book(id: $id) {
+			id
+			name
+			genre
+			author {
+				id
+				name
+			}
+		}
+	}
+`;
+
+export { GET_BOOKS, GET_AUTHORS, ADD_BOOK, GET_BOOK };

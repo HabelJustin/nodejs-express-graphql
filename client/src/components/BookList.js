@@ -1,9 +1,17 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
-import { GET_BOOKS } from "../queries/queries";
+import { useQuery, useLazyQuery } from "@apollo/client";
+import { GET_BOOKS, GET_BOOK } from "../queries/queries";
 
 const BookList = () => {
-	const { loading, error, data } = useQuery(GET_BOOKS);
+	const { loading, error, data, refetch } = useQuery(GET_BOOKS);
+	const [getBook, status] = useLazyQuery(GET_BOOK);
+
+	console.log("Book response:", status.data || "loading...");
+
+	function showBookDetail(bookData) {
+		console.log({ bookData });
+		getBook({ variables: { id: bookData.id } });
+	}
 
 	return (
 		<div>
@@ -12,7 +20,7 @@ const BookList = () => {
 			) : (
 				<ul id="book-list">
 					{data.books.map((book) => (
-						<li key={book.id}>
+						<li key={book.id} onClick={() => showBookDetail(book)} style={{ cursor: "pointer" }}>
 							{book.name} - {book.author.name}
 						</li>
 					))}

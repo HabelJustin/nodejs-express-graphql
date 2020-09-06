@@ -19,7 +19,6 @@ function onAddAuthor(e, addBook) {
 
 	const { book_name, book_genre, book_author } = e.target;
 	const newAuthor = { name: book_name.value, genre: book_genre.value, authorId: book_author.value };
-	console.log({ newAuthor });
 	addBook({
 		variables: {
 			...newAuthor,
@@ -28,7 +27,7 @@ function onAddAuthor(e, addBook) {
 }
 
 const AddBok = () => {
-	const { loading, error, data } = useQuery(GET_AUTHORS);
+	const { loading, error, data } = useQuery(GET_AUTHORS); // first fetch (sequence request after, will use cached version)
 	const [addBook, mutationResponse] = useMutation(ADD_BOOK);
 	console.log("Mutation Data Response:", mutationResponse);
 
